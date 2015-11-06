@@ -52,4 +52,4 @@
 * [blabla](_posts/_uncompleted/android-understanding-binder-native-part.md)
 * [blabla](_posts/_uncompleted/bash-tips.md)
 * [blabla](_posts/_uncompleted/Introduction-to-JamVM.md)
-* [blabla](_posts/_uncompleted/memory-leak-on-android.md
+* [blabla](_posts/_uncompleted/memory-leak-on-android.md)
