@@ -29,15 +29,15 @@ echo %errorlevel%
 ```
 set $www_root_dir "path/to/your/root/dir";
 location / {
-	alias   $www_root_dir;			
-	rewrite .* /md.php?file=$request_filename  last;
+    alias   $www_root_dir;
+    rewrite .* /md.php?file=$request_filename  last;
 }
 
 # fastcgi
 location ~ \.php$ {
-	root		   $www_root_dir/fastcgi;
-	fastcgi_pass   127.0.0.1:9123;
-	include        fastcgi.conf;
+    root           $www_root_dir/fastcgi;
+    fastcgi_pass   127.0.0.1:9123;
+    include        fastcgi.conf;
 }
 ```
 
@@ -52,17 +52,17 @@ location ~ \.php$ {
 <?php
 $md = @$_GET['file'];
 if(is_dir($md)) {
-	$md = rtrim($md, "/")."/index.md";
+    $md = rtrim($md, "/")."/index.md";
 }
 
 include 'Parsedown.php';
 $Parsedown = new Parsedown();
 
 if(file_exists($md)) {
-	$content = file_get_contents($md) or '__Read file error__';
-	echo $Parsedown->text($content);
+    $content = file_get_contents($md) or '__Read file error__';
+    echo $Parsedown->text($content);
 } else {
-	echo $Parsedown->text('__404 Error__');
+    echo $Parsedown->text('__404 Error__');
 }
 ?>
 </body>
