@@ -14,54 +14,39 @@ tags: [rxjava]
 class Data {}
 
 interface Subscriber {
-	public void onEvent(Data d);
+    public void onEvent(Data d);
 }
 
 class Observable {
-	private Subscriber subscriber;
-	public void register(Subscriber s) {
-		subscriber = s;
-	}
-	private void onEvent(Data d) {
-		if(subscriber != null) {
-			subscriber.onEvent(d);
-		}
-	}
+    private Subscriber subscriber;
+    public void register(Subscriber s) {
+        subscriber = s;
+    }
+    private void onEvent(Data d) {
+        if(subscriber != null) {
+            subscriber.onEvent(d);
+        }
+    }
 }
 ```
 
 # 多级观察者
 
 ```java
-interface OnEvent {
-	void call(Data d);
-}
-
-interface Func {
-	public Data call(Data d);
-}
-
 class InterSubscriber implements Subscriber {
-	private Subscriber subscriber;
-	private OnEvent onEvent;
-	private Func func;
-	
-	public InterSubscriber(OnEvent onEvent) {
-		this.onEvent = onEvent;
-	}
-	
-	public InterSubscriber register(Subscriber s) {
-		subscriber = s;
-		return new InterSubscriber(new OnEvent() {
-			public void call(Data d) {
-				s.onEvent(func.call(d));
-			}
-		});
-	}
-	@Override
-	public void onEvent() {
-		onEvent.call();
-	}
+    private Subscriber subscriber;
+    
+    public InterSubscriber register(Subscriber s) {
+        subscriber = s;
+    }
+    @Override
+    public void onEvent() {
+        // 1. do something
+        // 2. tell subscriber
+        if(subscriber != null) {
+                subscriber.onEvent();
+        }
+    }
 }
 
 Observable o = new Observable();
@@ -80,4 +65,4 @@ o.onEvent();
 # 中间观察者的另一面是**被观察者**
 
 被观察者的行为可以总结为：
-> 产生事件
+> 产生事件，事件
